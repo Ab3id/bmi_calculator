@@ -1,3 +1,4 @@
+import 'package:bmi_calculator/widgets/measurement_card.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,8 +11,11 @@ class MAinApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'BMI Calculator',
-      theme: ThemeData(primarySwatch: Colors.lightGreen),
+      theme: ThemeData.dark().copyWith(
+        primaryColor: Colors.cyan,
+      ),
       home: const BmiHomePage(),
     );
   }
@@ -101,76 +105,21 @@ class _BmiHomePageState extends State<BmiHomePage> {
         const SizedBox(
           height: 30,
         ),
-        Container(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Height: $height CM',
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          height = height - 1;
-                          bmi = _calculateBMI();
-                        });
-                      },
-                      child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: const Center(
-                            child: Text(
-                              '-',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 35),
-                            ),
-                          )),
-                    ),
-                    const SizedBox(
-                      width: 50,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        setState(() {
-                          height = height + 1;
-                          bmi = _calculateBMI();
-                        });
-                      },
-                      child: Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: const Center(
-                            child: Text(
-                              '+',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 35),
-                            ),
-                          )),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
+        MeasurementCard(
+            measurement: height,
+            title: 'Height',
+            decreaseAction: () {
+              setState(() {
+                height = height - 1;
+                bmi = _calculateBMI();
+              });
+            },
+            increaseAction: () {
+              setState(() {
+                height = height + 1;
+                bmi = _calculateBMI();
+              });
+            }),
         const SizedBox(
           height: 50,
         ),
@@ -178,146 +127,38 @@ class _BmiHomePageState extends State<BmiHomePage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Weight: $weight KG',
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              weight = weight - 1;
-                              bmi = _calculateBMI();
-                            });
-                          },
-                          child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: const Center(
-                                child: Text(
-                                  '-',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 35),
-                                ),
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              weight = weight + 1;
-                              bmi = _calculateBMI();
-                            });
-                          },
-                          child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: const Center(
-                                child: Text(
-                                  '+',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 35),
-                                ),
-                              )),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Age: $age',
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              age = age - 1;
-                              bmi = _calculateBMI();
-                            });
-                          },
-                          child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: const Center(
-                                child: Text(
-                                  '-',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 35),
-                                ),
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 50,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              age = age + 1;
-                              bmi = _calculateBMI();
-                            });
-                          },
-                          child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              child: const Center(
-                                child: Text(
-                                  '+',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 35),
-                                ),
-                              )),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            )
+            MeasurementCard(
+                measurement: weight,
+                title: 'Weight',
+                decreaseAction: () {
+                  setState(() {
+                    weight = weight - 1;
+                    bmi = _calculateBMI();
+                  });
+                },
+                increaseAction: () {
+                  setState(() {
+                    weight = weight + 1;
+                    bmi = _calculateBMI();
+                  });
+                }),
+            MeasurementCard(
+                measurement: age,
+                title: 'Age',
+                showCm: false,
+                decreaseAction: () {
+                  setState(() {
+                    age = age - 1;
+
+                    bmi = _calculateBMI();
+                  });
+                },
+                increaseAction: () {
+                  setState(() {
+                    age = age + 1;
+                    bmi = _calculateBMI();
+                  });
+                }),
           ],
         ),
         const SizedBox(
